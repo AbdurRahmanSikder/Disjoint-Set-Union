@@ -1,0 +1,29 @@
+class DSU {
+	private:
+		vector<int> parent;
+		vector<int> size;
+	public:
+		DSU(int size) : parent(size), size(size, 1) {
+			for (int i = 0; i < size; i++) {
+				parent[i] = i;
+			}
+		}
+
+		int get_top(int n) {
+			return parent[n] == n ? n : (parent[n] = get_top(parent[n]));
+		}
+
+		bool link(int n1, int n2) {
+			n1 = get_top(n1);
+			n2 = get_top(n2);
+			if (n1 == n2) {
+				return false;
+			}
+			if (size[n2] > size[n1]) {
+				return link(n2, n1);
+			}
+			parent[n2] = n1;
+			size[n1] += size[n2];
+			return true;
+		}
+};
