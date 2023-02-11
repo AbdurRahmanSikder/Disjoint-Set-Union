@@ -20,41 +20,41 @@ void __print(bool x) { cerr << (x ? "true" : "false"); }
 template <typename T, typename V>
 void __print(const pair<T, V> &x)
 {
-  cerr << '{';
-  __print(x.first);
-  cerr << ',';
-  __print(x.second);
-  cerr << '}';
+	cerr << '{';
+	__print(x.first);
+	cerr << ',';
+	__print(x.second);
+	cerr << '}';
 }
 template <typename T>
 void __print(const T &x)
 {
-  int f = 0;
-  cerr << '{';
-  for (auto &i : x)
-    cerr << (f++ ? "," : ""), __print(i);
-  cerr << "}";
+	int f = 0;
+	cerr << '{';
+	for (auto &i : x)
+		cerr << (f++ ? "," : ""), __print(i);
+	cerr << "}";
 }
 void _print() { cerr << "]\n"; }
 template <typename T, typename... V>
 void _print(T t, V... v)
 {
-  __print(t);
-  if (sizeof...(v))
-    cerr << ", ";
-  _print(v...);
+	__print(t);
+	if (sizeof...(v))
+		cerr << ", ";
+	_print(v...);
 }
 #ifndef ONLINE_JUDGE
-#define debug(x...)             \
-  cerr << "[" << #x << "] = ["; \
-  _print(x)
+#define debug(x...)               \
+	cerr << "[" << #x << "] = ["; \
+	_print(x)
 #else
 #define debug(x...)
 #endif
-#define IOS                \
-  ios::sync_with_stdio(0); \
-  cin.tie(0);              \
-  cout.tie(0);
+#define IOS                  \
+	ios::sync_with_stdio(0); \
+	cin.tie(0);              \
+	cout.tie(0);
 #define endl "\n"
 #define YES printf("YES\n")
 #define NO printf("NO\n")
@@ -79,56 +79,58 @@ const ll N = 10000007;
 #define mll map<long long, long long>
 ll parent[100000];
 ll sz[100000];
-void make(ll v)
+void make(ll nodes)
 {
-   parent[v] = v;
-   sz[v] = 1;
+	for (ll i = 1; i <= nodes; i++)
+	{
+		parent[i] = i;
+		sz[i] = 1;
+	}
 }
 ll find(ll v)
 {
-   if(parent[v] == v)
-    return v;
-   return parent[v] = find(parent[v]);
+	if (parent[v] == v)
+		return v;
+	return parent[v] = find(parent[v]);
 }
 void Union(ll u, ll v)
 {
-   ll a = find(u);
-   ll b = find(v);
-   if(a!=b)
-   {
-      if(sz[a]<sz[b])//don't change the depth
-        swap(a,b);
-      parent[b] = a; //choto tar parent boro ta
-      sz[a] += sz[b];
-   }
+	ll a = find(u);
+	ll b = find(v);
+	if (a != b)
+	{
+		if (sz[a] < sz[b]) // don't change the depth
+			swap(a, b);
+		parent[b] = a; // choto tar parent boro ta
+		sz[a] += sz[b];
+	}
 }
 void solve()
 {
-   ll i,nodes, edges,ans=0,a,b;
-   cin>>nodes>>edges;
-   for(i=1;i<=nodes;i++)
-     make(i);
-   for(i=0;i<edges;i++)
-   {
-     cin>>a>>b;
-     Union(a,b);
-   }
-   for(i=1;i<=nodes;i++)
-   {
-      if(parent[i] == i)
-       ans++;
-   }
-   cout<<ans<<endl;
+	ll i, nodes, edges, ans = 0, a, b;
+	cin >> nodes >> edges;
+	for (i = 0; i < edges; i++)
+	{
+		cin >> a >> b;
+		Union(a, b);
+	}
+	make(nodes);
+	for (i = 1; i <= nodes; i++)
+	{
+		if (parent[i] == i)
+			ans++;
+	}
+	cout << ans << endl;
 }
 int main()
 {
-  ios_base::sync_with_stdio(false);
-  cin.tie(NULL);
-  cout.tie(NULL);
-  ll t = 1;
-  //cin >> t;
-  while (t--)
-  {
-    solve();
-  }
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	ll t = 1;
+	// cin >> t;
+	while (t--)
+	{
+		solve();
+	}
 }
