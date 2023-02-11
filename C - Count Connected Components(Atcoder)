@@ -109,12 +109,13 @@ void solve()
 {
 	ll i, nodes, edges, ans = 0, a, b;
 	cin >> nodes >> edges;
+	make(nodes);
 	for (i = 0; i < edges; i++)
 	{
 		cin >> a >> b;
 		Union(a, b);
 	}
-	make(nodes);
+	
 	for (i = 1; i <= nodes; i++)
 	{
 		if (parent[i] == i)
